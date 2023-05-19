@@ -1,23 +1,16 @@
-/* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
-const withTM = require('next-transpile-modules')([
-  '@solana/wallet-adapter-base',
-  '@solana/wallet-adapter-react',
-  '@solana/wallet-adapter-react-ui',
-  '@solana/wallet-adapter-wallets'
-]);
-
 /** @type {import('next').NextConfig} */
-module.exports = withTM({
+const nextConfig = {
   reactStrictMode: true,
-  webpack5: true,
-  pageExtensions: ['tsx'],
+  compiler: {
+    styledComponents: true
+  },
   images: { domains: ['https://www.arweave.net/', 'www.arweave.net'] },
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback.fs = false;
-    }
-    return config;
-  }
-});
+  transpilePackages: [
+    '@web3modal/ethereum',
+    '@web3modal/react',
+    '@web3modal/ui',
+    '@web3modal/core'
+  ]
+};
+
+module.exports = nextConfig;
