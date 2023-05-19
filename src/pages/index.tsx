@@ -1,9 +1,9 @@
+import { useAccount } from 'wagmi';
+
+import NotConnected from '../containers/NotConnected ';
 import Stake from '../containers/Stake';
 
 export default function Home() {
-  return (
-    <>
-      <Stake />
-    </>
-  );
+  const { isConnected } = useAccount();
+  return isConnected ? <Stake /> : <NotConnected />;
 }
