@@ -159,6 +159,7 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         .then(() => {
           getUnstakedNfts();
           getStakedNftsByLockup();
+          getStakingInfo();
         }),
       {
         loading: 'Sending transaction...',
@@ -190,6 +191,7 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         .then(() => {
           getUnstakedNfts();
           getStakedNftsByLockup();
+          getStakingInfo();
         }),
       {
         loading: 'Sending transaction...',
