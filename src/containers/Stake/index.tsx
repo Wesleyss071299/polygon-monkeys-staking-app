@@ -34,7 +34,7 @@ import 'react-dropdown/style.css';
 export default function Stake() {
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<'unstaked' | 'staked'>('unstaked');
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
 
   const {
     getUnstakedNfts,
@@ -52,15 +52,15 @@ export default function Stake() {
 
   const getNfts = useCallback(async () => {
     await getUnstakedNfts();
-  }, [getUnstakedNfts]);
+  }, [getUnstakedNfts, address]);
 
   const getStakedNfts = useCallback(async () => {
     await getStakedNftsByLockup();
-  }, [getStakedNftsByLockup]);
+  }, [getStakedNftsByLockup, address]);
 
   const getStaking = useCallback(async () => {
     await getStakingInfo();
-  }, [getStakingInfo]);
+  }, [getStakingInfo, address]);
 
   useEffect(() => {
     getNfts();
