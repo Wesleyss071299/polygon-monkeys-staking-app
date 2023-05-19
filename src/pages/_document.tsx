@@ -43,7 +43,7 @@ export default class MyDocument extends Document {
       <Html>
         <Head>
           {/* <!-- Primary Meta Tags --> */}
-          <link rel="shortcut icon" href="/favi.png" type="image/png" />
+          <link rel="shortcut icon" href="/logo.png" type="image/png" />
           <meta name="title" content={`${COLLECTION_NAME} Staking`} />{' '}
           <meta name="description" content={`${COLLECTION_NAME} Staking`} />
           {/* <!-- Open Graph / Facebook --> */}
