@@ -64,15 +64,15 @@ export default function Stake() {
 
   useEffect(() => {
     getNfts();
-  }, []);
+  }, [address]);
 
   useEffect(() => {
     getStakedNfts();
-  }, [currentVault]);
+  }, [currentVault, address]);
 
   useEffect(() => {
     getStaking();
-  }, []);
+  }, [address]);
 
   const dropdownOptions = DROPDOWN_OPTIONS.map((option) => {
     return {
