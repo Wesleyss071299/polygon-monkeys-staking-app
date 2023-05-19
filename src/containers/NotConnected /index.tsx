@@ -47,7 +47,8 @@ export default function NotConnected() {
                 style: {
                   opacity: 0,
                   pointerEvents: 'none',
-                  userSelect: 'none'
+                  userSelect: 'none',
+                  zIndex: 1
                 }
               })}
             >
@@ -68,7 +69,8 @@ export default function NotConnected() {
                         padding: '15px',
                         cursor: 'pointer',
                         color: '#000',
-                        marginTop: 40
+                        marginTop: 40,
+                        zIndex: 1
                       }}
                     >
                       CONNECT WALLET
