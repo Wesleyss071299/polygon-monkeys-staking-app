@@ -69,7 +69,7 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     const { data } = await api.get(`user/${address}`);
     setRewards(data.balance);
     setTotalStaked(data.stakes.length);
-  }, []);
+  }, [address]);
 
   const getUnstakedNfts = useCallback(async () => {
     if (!nftContract || !address) return;
