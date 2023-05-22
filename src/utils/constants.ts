@@ -5,7 +5,7 @@ import STAKINGABI from '../abi/Staking.json';
 
 export const NFTContractAddress = '0x4ad41a445e450fFd2861E30C517859C93eC15e4A';
 export const StakingContractAddress =
-  '0xb6b5D3D7E57edD14C2Cf305e19827D1Cf3571AC2';
+  '0xb0A3bC84a04eE1eFfB2a67F9403d5E230C7A47E0';
 
 export const createNFTContract = () => {
   const web3 = new Web3(window.ethereum as any);

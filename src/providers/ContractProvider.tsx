@@ -178,35 +178,39 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const handleUnstakeNft = async (tokenIds: number[]) => {
-    const { data } = await axios.get(
-      'https://gasstation-mainnet.matic.network/v2'
-    );
+    try {
+      const { data } = await axios.get(
+        'https://gasstation-mainnet.matic.network/v2'
+      );
 
-    console.log(tokenIds);
+      console.log(tokenIds);
 
-    const gasFee = data.fast.maxPriorityFee;
+      const gasFee = data.fast.maxPriorityFee;
 
-    const gas = await stakingContract.methods
-      .unstakeToken(tokenIds)
-      .estimateGas({ from: address });
-
-    const gasPrice = Web3.utils.toWei(String(Math.floor(gasFee)), 'Gwei');
-
-    toast.promise(
-      stakingContract.methods
+      const gas = await stakingContract.methods
         .unstakeToken(tokenIds)
-        .send({ from: address, gas: gas, gasPrice })
-        .then(() => {
-          getUnstakedNfts();
-          getStakedNftsByLockup();
-          getStakingInfo();
-        }),
-      {
-        loading: 'Sending transaction...',
-        success: <b>Success</b>,
-        error: <b>Something went wrong!.</b>
-      }
-    );
+        .estimateGas({ from: address });
+
+      const gasPrice = Web3.utils.toWei(String(Math.floor(gasFee)), 'Gwei');
+
+      toast.promise(
+        stakingContract.methods
+          .unstakeToken(tokenIds)
+          .send({ from: address, gas: gas, gasPrice })
+          .then(() => {
+            getUnstakedNfts();
+            getStakedNftsByLockup();
+            getStakingInfo();
+          }),
+        {
+          loading: 'Sending transaction...',
+          success: <b>Success</b>,
+          error: <b>Something went wrong!.</b>
+        }
+      );
+    } catch (error) {
+      toast.error('MONKEY Locked');
+    }
   };
 
   return (
