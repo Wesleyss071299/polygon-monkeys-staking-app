@@ -121,58 +121,62 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [address, nftContractGet.methods]);
 
   const handleStakeNft = async (tokenIds: number[]) => {
-    const isApproved = await nftContractGet.methods
-      .isApprovedForAll(address, StakingContractAddress)
-      .call();
+    try {
+      const isApproved = await nftContractGet.methods
+        .isApprovedForAll(address, StakingContractAddress)
+        .call();
 
-    const { data } = await axios.get(
-      'https://gasstation-mainnet.matic.network/v2'
-    );
+      const { data } = await axios.get(
+        'https://gasstation-mainnet.matic.network/v2'
+      );
 
-    if (!isApproved) {
-      const gas = nftContract.methods
-        .setApprovalForAll(StakingContractAddress, true)
-        .estimateGas({ from: address });
+      if (!isApproved) {
+        const gas = nftContract.methods
+          .setApprovalForAll(StakingContractAddress, true)
+          .estimateGas({ from: address });
+
+        const gasFee = data.estimatedBaseFee;
+
+        const gasPrice = Web3.utils.toWei(String(Math.floor(gasFee)), 'Gwei');
+
+        await toast.promise(
+          nftContract.methods
+            .setApprovalForAll(StakingContractAddress, true)
+            .send({ from: address, gas: gas, gasPrice }),
+          {
+            loading: 'Sending transaction...',
+            success: <b>Success</b>,
+            error: <b>Something went wrong!.</b>
+          }
+        );
+      }
 
       const gasFee = data.estimatedBaseFee;
 
+      const gas = await stakingContract.methods
+        .stakeToken(tokenIds, Number(currentVault.lockup), currentVault.type)
+        .estimateGas({ from: address });
+
       const gasPrice = Web3.utils.toWei(String(Math.floor(gasFee)), 'Gwei');
 
-      await toast.promise(
-        nftContract.methods
-          .setApprovalForAll(StakingContractAddress, true)
-          .send({ from: address, gas: gas, gasPrice }),
+      toast.promise(
+        stakingContract.methods
+          .stakeToken(tokenIds, Number(currentVault.lockup), currentVault.type)
+          .send({ from: address, gas: gas, gasPrice })
+          .then(() => {
+            getUnstakedNfts();
+            getStakedNftsByLockup();
+            getStakingInfo();
+          }),
         {
           loading: 'Sending transaction...',
           success: <b>Success</b>,
           error: <b>Something went wrong!.</b>
         }
       );
+    } catch (error) {
+      console.log(error);
     }
-
-    const gasFee = data.estimatedBaseFee;
-
-    const gas = await stakingContract.methods
-      .stakeToken(tokenIds, Number(currentVault.lockup), currentVault.type)
-      .estimateGas({ from: address });
-
-    const gasPrice = Web3.utils.toWei(String(Math.floor(gasFee)), 'Gwei');
-
-    toast.promise(
-      stakingContract.methods
-        .stakeToken(tokenIds, Number(currentVault.lockup), currentVault.type)
-        .send({ from: address, gas: gas, gasPrice })
-        .then(() => {
-          getUnstakedNfts();
-          getStakedNftsByLockup();
-          getStakingInfo();
-        }),
-      {
-        loading: 'Sending transaction...',
-        success: <b>Success</b>,
-        error: <b>Something went wrong!.</b>
-      }
-    );
   };
 
   const handleUnstakeNft = async (tokenIds: number[]) => {
