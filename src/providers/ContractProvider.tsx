@@ -22,6 +22,7 @@ const ContractContext = React.createContext({
   stakedNfts: [],
   totalStaked: 0,
   rewards: 0,
+  totalStakedPerUser: 0,
   currentVault: {
     id: '1',
     lockup: '7',
@@ -50,6 +51,8 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
   const [unstakedNfts, setUnstakedNfts] = useState([]);
   const [stakedNfts, setStakedNfts] = useState([]);
   const [totalStaked, setTotalStaked] = useState(0);
+  const [totalStakedPerUser, setTotalStakedPerUser] = useState(0);
+
   const [rewards, setRewards] = useState(0);
 
   const { address } = useAccount();
@@ -69,6 +72,7 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     const { data } = await api.get(`user/${address}`);
     const response = await api.get(`stake`);
     setRewards(data.balance);
+    setTotalStakedPerUser(data.stakes.length);
     setTotalStaked(response.data.length);
   }, [address]);
 
@@ -218,7 +222,8 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         currentVault,
         setCurrentVault,
         getStakingInfo,
-        handleUnstakeNft
+        handleUnstakeNft,
+        totalStakedPerUser
       }}
     >
       {children}

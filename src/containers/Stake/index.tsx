@@ -52,7 +52,8 @@ export default function Stake() {
     setCurrentVault,
     getStakingInfo,
     totalStaked,
-    handleUnstakeNft
+    handleUnstakeNft,
+    totalStakedPerUser
   } = useContractContext();
 
   const getNfts = useCallback(async () => {
@@ -85,9 +86,9 @@ export default function Stake() {
       label: (
         <DropdownLabel
           key={option.id}
-          title={`${COLLECTION_NAME} - ${
-            option.type === 'RARITY' ? 'CUSTOM' : option.rewardRate
-          } ${TOKEN_NAME}`}
+          title={`${
+            option.type === 'RARITY' ? 'RARITY BASED' : option.rewardRate
+          } ${option.rewardRate === '1' ? 'POINT' : 'POINTS'}  PER MONKEY`}
         >
           Lockup: {option.lockupPeriod} Days
         </DropdownLabel>
@@ -185,7 +186,7 @@ export default function Stake() {
               <InfoCard>
                 <h6>My Staked {COLLECTION_NAME}</h6>
                 <strong>
-                  {String(totalStaked || 0).padStart(2, '0') || '00'}
+                  {String(totalStakedPerUser || 0).padStart(2, '0') || '00'}
                 </strong>
               </InfoCard>
 
@@ -237,7 +238,7 @@ export default function Stake() {
                 </span>
                 <span>Rarity Based - 90 days lockup</span>
                 <span>Common - 0.5 points per day</span>
-                <span>Uncommon - 1 points per day</span>
+                <span>Uncommon - 1 point per day</span>
                 <span>Rare - 1.5 points per day</span>
                 <span>Epic - 3 points per day</span>
                 <span>Legendary - 4 points per day</span>
