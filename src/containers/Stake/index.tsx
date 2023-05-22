@@ -239,10 +239,10 @@ export default function Stake() {
                 <span>Rarity Based - 90 days lockup</span>
                 <span>Common - 1 points per day</span>
                 <span>Uncommon - 2 point per day</span>
-                <span>Rare - 3 points per day</span>
-                <span>Epic - 4 points per day</span>
-                <span>Legendary - 6 points per day</span>
-                <span>Mythic - 10 points per day</span>
+                <span>Rare - 6 points per day</span>
+                <span>Epic - 8 points per day</span>
+                <span>Legendary - 10 points per day</span>
+                <span>Mythic - 12 points per day</span>
               </Popup>
               {activeTab === 'unstaked' && (
                 <LoadingButton
