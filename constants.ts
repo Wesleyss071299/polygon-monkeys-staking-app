@@ -35,12 +35,6 @@ export const DROPDOWN_OPTIONS = [
     type: 'RARITY',
     rewardRate: ' ',
     lockupPeriod: '90'
-  },
-  {
-    id: '6',
-    type: 'NORMAL',
-    rewardRate: '1',
-    lockupPeriod: '0'
   }
 ];
 
