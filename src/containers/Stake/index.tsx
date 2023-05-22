@@ -122,7 +122,6 @@ export default function Stake() {
 
   function atualizarPontos() {
     const pontos = calcularPontos();
-    console.log(pontos);
     setPoints(Number(pontos));
   }
 
