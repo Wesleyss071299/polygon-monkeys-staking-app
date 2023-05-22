@@ -9,7 +9,7 @@ import Modal from 'react-modal';
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { ThemeProvider } from 'styled-components';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
-import { polygon, polygonMumbai } from 'wagmi/chains';
+import { polygon } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 
 import ContractProvider from '../providers/ContractProvider';
@@ -18,10 +18,7 @@ import { theme } from '../styles/theme';
 
 Modal.setAppElement('#modal-portal');
 
-const { chains, provider } = configureChains(
-  [polygon, polygonMumbai],
-  [publicProvider()]
-);
+const { chains, provider } = configureChains([polygon], [publicProvider()]);
 
 const { connectors } = getDefaultWallets({
   appName: 'My RainbowKit App',

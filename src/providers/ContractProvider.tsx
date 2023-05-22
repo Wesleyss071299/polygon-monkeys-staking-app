@@ -55,8 +55,8 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const [rewards, setRewards] = useState(0);
 
-  const { address } = useAccount();
-  // const address = '0x0c84ff9cd768dfaf659349d6f450d7e029f2817e';
+  // const { address } = useAccount();
+  const address = '0xfB3D03d112c3cA97fC016515661e10F2f24bc399';
 
   useEffect(() => {
     setNftContract(createNFTContract());
@@ -79,27 +79,17 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
   const getUnstakedNfts = useCallback(async () => {
     if (!nftContract || !address) return;
 
-    const nftBalance = await nftContractGet.methods.balanceOf(address).call();
-
-    // const tokens = await nftContractGet.methods.tokensOfOwner(address).call();
-    // const tokens = await nftContractGet.methods
-    //   .tokenOfOwnerByIndex(address)
-    //   .call();
-
-    const arr = new Array(Number(nftBalance)).fill(0);
+    const tokens = await nftContractGet.methods.tokensOfOwner(address).call();
 
     const unstakedResponse = await Promise.all(
-      arr.map(async (_nft, index) => {
-        const tokenId = await nftContractGet.methods
-          .tokenOfOwnerByIndex(address, index)
-          .call();
-        const url = await nftContractGet.methods.tokenURI(tokenId).call();
+      tokens.map(async (nft, index) => {
+        const url = await nftContractGet.methods.tokenURI(nft).call();
         const { data } = await axios.get(
           `https://ipfs.io/ipfs/${url.split('://')[1]}`
         );
         return {
           ...data,
-          tokenId: tokenId
+          tokenId: nft
         };
       })
     );

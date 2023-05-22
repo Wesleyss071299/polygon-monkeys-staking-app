@@ -295,7 +295,7 @@ export default function Stake() {
                       Rarity:{' '}
                       {
                         rarity.find((r) => r.tokenId === Number(token.tokenId))
-                          .raridade
+                          ?.raridade
                       }{' '}
                     </div>
                   </div>

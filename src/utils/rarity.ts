@@ -4434,5 +4434,14 @@ export const rarity = [
   { rank: 4433, tokenId: 1086, raridade: 'Common' },
   { rank: 4434, tokenId: 1361, raridade: 'Common' },
   { rank: 4435, tokenId: 437, raridade: 'Common' },
-  { rank: 4435, tokenId: 15, raridade: 'Common' }
+  { rank: 4436, tokenId: 15, raridade: 'Common' },
+  { rank: 4437, tokenId: 22, raridade: 'Common' },
+  { rank: 4438, tokenId: 34, raridade: 'Common' },
+  { rank: 4439, tokenId: 71, raridade: 'Common' },
+  { rank: 4440, tokenId: 65, raridade: 'Common' },
+  { rank: 4441, tokenId: 24, raridade: 'Common' },
+  { rank: 4442, tokenId: 42, raridade: 'Common' },
+  { rank: 4443, tokenId: 53, raridade: 'Common' },
+  { rank: 4444, tokenId: 56, raridade: 'Common' },
+  { rank: 4445, tokenId: 57, raridade: 'Common' }
 ];
