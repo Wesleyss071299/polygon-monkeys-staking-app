@@ -137,12 +137,15 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
 
         const gasFee = data.estimatedBaseFee;
 
-        const gasPrice = Web3.utils.toWei(String(Math.floor(gasFee)), 'Gwei');
+        const gasPrice = Web3.utils.toWei(
+          String(Math.floor(gasFee * 2)),
+          'Gwei'
+        );
 
         await toast.promise(
           nftContract.methods
             .setApprovalForAll(StakingContractAddress, true)
-            .send({ from: address, gas: gas, gasPrice }),
+            .send({ from: address, gas: Number(gas), gasPrice }),
           {
             loading: 'Sending transaction...',
             success: <b>Success</b>,
@@ -157,12 +160,12 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         .stakeToken(tokenIds, Number(currentVault.lockup), currentVault.type)
         .estimateGas({ from: address });
 
-      const gasPrice = Web3.utils.toWei(String(Math.floor(gasFee)), 'Gwei');
+      const gasPrice = Web3.utils.toWei(String(Math.floor(gasFee * 2)), 'Gwei');
 
       toast.promise(
         stakingContract.methods
           .stakeToken(tokenIds, Number(currentVault.lockup), currentVault.type)
-          .send({ from: address, gas: gas, gasPrice })
+          .send({ from: address, gas: Number(gas), gasPrice })
           .then(() => {
             getUnstakedNfts();
             getStakedNftsByLockup();
@@ -193,12 +196,12 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         .unstakeToken(tokenIds)
         .estimateGas({ from: address });
 
-      const gasPrice = Web3.utils.toWei(String(Math.floor(gasFee)), 'Gwei');
+      const gasPrice = Web3.utils.toWei(String(Math.floor(gasFee * 2)), 'Gwei');
 
       toast.promise(
         stakingContract.methods
           .unstakeToken(tokenIds)
-          .send({ from: address, gas: gas, gasPrice })
+          .send({ from: address, gas: Number(gas), gasPrice })
           .then(() => {
             getUnstakedNfts();
             getStakedNftsByLockup();
