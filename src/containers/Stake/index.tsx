@@ -11,12 +11,12 @@ import { useAccount } from 'wagmi';
 import {
   COLLECTION_NAME,
   TOKEN_NAME,
-  DROPDOWN_OPTIONS,
-  LOCKUP_PERIOD_1
+  DROPDOWN_OPTIONS
 } from '../../../constants';
 import { DropdownLabel } from '../../components/DropdownLabel';
 import { LoadingButton } from '../../components/LoadingButton';
 import { useContractContext } from '../../providers/ContractProvider';
+import { calcularDiasDesbloqueio } from '../../utils/cacLockup';
 import { calcPercentage } from '../../utils/calcPercentage';
 import {
   Button,
@@ -25,6 +25,7 @@ import {
   GridContainer,
   Header,
   InfoCard,
+  Popup,
   StakingInfo,
   TokenContainer
 } from './styles';
@@ -32,12 +33,13 @@ import {
 import 'react-dropdown/style.css';
 
 import 'react-dropdown/style.css';
-import { calcularDiasDesbloqueio } from '../../utils/cacLockup';
+import { rarity } from '../../utils/rarity';
 
 export default function Stake() {
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<'unstaked' | 'staked'>('unstaked');
   const { isConnected, address } = useAccount();
+  const [points, setPoints] = useState(0);
 
   const {
     getUnstakedNfts,
@@ -85,7 +87,7 @@ export default function Stake() {
           key={option.id}
           title={`${COLLECTION_NAME} - ${
             option.type === 'RARITY' ? 'CUSTOM' : option.rewardRate
-          } $${TOKEN_NAME}`}
+          } ${TOKEN_NAME}`}
         >
           Lockup: {option.lockupPeriod} Days
         </DropdownLabel>
@@ -101,6 +103,33 @@ export default function Stake() {
       type: currentOption.type
     });
   };
+
+  const calcularPontos = () => {
+    const agora = new Date(); // hora atual
+    let pontosTotal = 0;
+    for (let i = 0; i < stakedNfts.length; i++) {
+      const stakeAt = new Date(stakedNfts[i].stakeDate);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+      const diferencaEmMs = agora - stakeAt; // diferença em milissegundos
+      const diferencaEmDias = diferencaEmMs / (24 * 60 * 60 * 1000); // diferença em dias
+      const pontosNft = diferencaEmDias * stakedNfts[i].multiplier; // pontos gerados pela NFT até agora
+      pontosTotal += pontosNft; // soma os pontos gerados por todas as NFTs
+    }
+    return pontosTotal.toFixed(4);
+  };
+
+  function atualizarPontos() {
+    const pontos = calcularPontos();
+    console.log(pontos);
+    setPoints(Number(pontos));
+  }
+
+  useEffect(() => {
+    const intervalId = setInterval(atualizarPontos, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [stakedNfts]);
 
   return (
     <>
@@ -164,7 +193,7 @@ export default function Stake() {
                 <>
                   <h6>Estimated Rewards</h6>
                   <strong>
-                    {rewards} ${TOKEN_NAME}
+                    {points} {TOKEN_NAME}
                   </strong>
                 </>
               </InfoCard>
@@ -189,6 +218,31 @@ export default function Stake() {
           </Button>
           {isConnected && (
             <div className="staking-actions">
+              <BiHelpCircle size={30} color="#000" className="iconHelp" />
+              <Popup>
+                <span>
+                  7 days lockup - 1 point per day - Only withdraw after 7 days
+                </span>
+                <span>
+                  30 days lockup - 2 points per day - Only withdraw after 30
+                  days
+                </span>
+                <span>
+                  60 days lockup - 4 points per day - Only withdraw after 60
+                  days
+                </span>
+                <span>
+                  90 days lockup - 6 points per day - Only withdraw after 90
+                  days
+                </span>
+                <span>Rarity Based - 90 days lockup</span>
+                <span>Common - 0.5 points per day</span>
+                <span>Uncommon - 1 points per day</span>
+                <span>Rare - 1.5 points per day</span>
+                <span>Epic - 3 points per day</span>
+                <span>Legendary - 4 points per day</span>
+                <span>Mythic - 6 points per day</span>
+              </Popup>
               {activeTab === 'unstaked' && (
                 <LoadingButton
                   onClick={() => {
@@ -233,6 +287,17 @@ export default function Stake() {
                     loader={({ src, width }) => `${src}?w=${width}`}
                   />
                   <h2>{token?.name}</h2>
+
+                  <div className="line"></div>
+                  <div className="nft-info">
+                    <div>
+                      Rarity:{' '}
+                      {
+                        rarity.find((r) => r.tokenId === Number(token.tokenId))
+                          .raridade
+                      }{' '}
+                    </div>
+                  </div>
 
                   <button
                     onClick={() => handleStakeNft([token.tokenId])}

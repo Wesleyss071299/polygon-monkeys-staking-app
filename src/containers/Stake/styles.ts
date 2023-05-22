@@ -22,6 +22,7 @@ export const Header = styled.header`
   justify-content: space-between;
   padding: 26px;
   margin-bottom: 48px;
+  position: relative;
 
   .collection-info {
     display: flex;
@@ -172,7 +173,6 @@ export const InfoCard = styled.div`
   max-width: 300px;
   padding: 24px 32px;
   color: #000 !important;
-  position: relative;
 
   h6 {
     font-size: 1.4rem;
@@ -223,6 +223,27 @@ export const InfoCard = styled.div`
   }
 `;
 
+export const Popup = styled.div`
+  position: absolute;
+  flex-direction: column;
+  /* top: 10px; */
+  display: flex;
+  visibility: hidden;
+
+  right: 30px;
+  background-color: #edd4fe;
+  width: 300px;
+  border-radius: 12px;
+  padding: 10px;
+  opacity: 0;
+  z-index: 3;
+  color: #000;
+  transition: opacity 0.3s ease;
+  span {
+    margin-top: 4px;
+  }
+`;
+
 export const ButtonGroup = styled.div`
   display: flex;
   align-items: center;
@@ -235,9 +256,18 @@ export const ButtonGroup = styled.div`
   width: 100%;
 
   .staking-actions {
+    align-items: center;
     margin-left: auto;
     display: flex;
     gap: 12px;
+
+    svg {
+      cursor: pointer;
+      :hover + div {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
   }
 `;
 

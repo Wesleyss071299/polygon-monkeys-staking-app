@@ -117,7 +117,8 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
           rarityId: nft.rarityId,
           rarityType: nft.rarityType,
           stakeDate: nft.stakeDate,
-          lockup: nft.lockup
+          lockup: nft.lockup,
+          multiplier: nft.multiplier
         };
       })
     );
