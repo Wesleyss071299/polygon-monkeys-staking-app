@@ -90,7 +90,8 @@ export default function Stake() {
             option.type === 'RARITY' ? 'RARITY BASED' : option.rewardRate
           } ${option.rewardRate === '1' ? 'POINT' : 'POINTS'}  PER MONKEY`}
         >
-          Lockup: {option.lockupPeriod} Days
+          {option.type === 'RARITY' ? 'Fixed' : ''} Lockup:{' '}
+          {option.lockupPeriod} Days
         </DropdownLabel>
       )
     };
