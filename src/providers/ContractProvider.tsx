@@ -125,11 +125,23 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       .isApprovedForAll(address, StakingContractAddress)
       .call();
 
+    const { data } = await axios.get(
+      'https://gasstation-mainnet.matic.network/v2'
+    );
+
     if (!isApproved) {
+      const gas = nftContract.methods
+        .setApprovalForAll(StakingContractAddress, true)
+        .estimateGas({ from: address });
+
+      const gasFee = data.estimatedBaseFee;
+
+      const gasPrice = Web3.utils.toWei(String(Math.floor(gasFee)), 'Gwei');
+
       await toast.promise(
         nftContract.methods
           .setApprovalForAll(StakingContractAddress, true)
-          .send({ from: address }),
+          .send({ from: address, gas: gas, gasPrice }),
         {
           loading: 'Sending transaction...',
           success: <b>Success</b>,
@@ -138,11 +150,7 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
       );
     }
 
-    const { data } = await axios.get(
-      'https://gasstation-mainnet.matic.network/v2'
-    );
-
-    const gasFee = data.fast.maxPriorityFee;
+    const gasFee = data.estimatedBaseFee;
 
     const gas = await stakingContract.methods
       .stakeToken(tokenIds, Number(currentVault.lockup), currentVault.type)
@@ -175,7 +183,7 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
 
       console.log(tokenIds);
 
-      const gasFee = data.fast.maxPriorityFee;
+      const gasFee = data.estimatedBaseFee;
 
       const gas = await stakingContract.methods
         .unstakeToken(tokenIds)
