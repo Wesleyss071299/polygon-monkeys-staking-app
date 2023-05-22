@@ -104,9 +104,7 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [address, nftContract, nftContractGet.methods]);
 
   const getStakedNftsByLockup = useCallback(async () => {
-    const { data } = await api.get(
-      `user/staked/${address}/${currentVault.lockup}/${currentVault.type}`
-    );
+    const { data } = await api.get(`user/staked/${address}`);
     const stakedResponse = await Promise.all(
       data.map(async (nft) => {
         const url = await nftContractGet.methods.tokenURI(nft.tokenId).call();
@@ -115,13 +113,17 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         );
         return {
           ...data,
-          tokenId: nft.tokenId
+          tokenId: nft.tokenId,
+          rarityId: nft.rarityId,
+          rarityType: nft.rarityType,
+          stakeDate: nft.stakeDate,
+          lockup: nft.lockup
         };
       })
     );
 
     setStakedNfts(stakedResponse);
-  }, [address, currentVault.lockup, currentVault.type, nftContractGet.methods]);
+  }, [address, nftContractGet.methods]);
 
   const handleStakeNft = async (tokenIds: number[]) => {
     const isApproved = await nftContractGet.methods

@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
+import { BiHelpCircle } from 'react-icons/bi';
 
-import { Container } from './styles';
+import { Container, IconContainerWrapper, Popup } from './styles';
 
 type DropdownLabelProps = {
   title: string;

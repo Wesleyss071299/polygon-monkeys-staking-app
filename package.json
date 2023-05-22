@@ -19,6 +19,7 @@
     "react-dom": "18.2.0",
     "react-dropdown": "^1.9.2",
     "react-hot-toast": "^2.4.0",
+    "react-icons": "^4.8.0",
     "react-modal": "^3.14.4",
     "react-query": "^3.34.16",
     "styled-components": "^5.3.9",

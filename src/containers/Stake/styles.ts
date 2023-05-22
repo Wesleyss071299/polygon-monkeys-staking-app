@@ -172,6 +172,7 @@ export const InfoCard = styled.div`
   max-width: 300px;
   padding: 24px 32px;
   color: #000 !important;
+  position: relative;
 
   h6 {
     font-size: 1.4rem;
@@ -298,6 +299,19 @@ export const TokenContainer = styled.div`
   h2 {
     font-size: 1.6rem;
     text-align: center;
+  }
+
+  .line {
+    height: 1px;
+    width: 100%;
+    background-color: #fff;
+    color: #000;
+  }
+
+  .nft-info {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
   }
 
   button {

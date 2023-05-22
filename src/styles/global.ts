@@ -11,7 +11,7 @@ export const GlobalStyles = createGlobalStyle`
     line-height: 1.2 !important;
     font-size: 1.6rem;
     color: ${({ theme }) => theme.colors.text};
-    background-color: #f9f1ef;
+    background-color: #f9f1ef;    
    }
 
   html {
@@ -24,7 +24,6 @@ export const GlobalStyles = createGlobalStyle`
     -webkit-font-smoothing: antialiased !important;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100%;
-    position: relative;
   }
 
   a {
@@ -56,8 +55,9 @@ export const GlobalStyles = createGlobalStyle`
     border-radius: 20px;
     transition: all .2s ease;
     color: #000;
+    
   }
-
+  
   .dropdown-control {
     background-color: transparent;
     border: none;
@@ -67,11 +67,13 @@ export const GlobalStyles = createGlobalStyle`
     padding: 24px 32px;
     cursor: pointer;
     color: #000;
-  }
 
+  }
+  
   .dropdown-placeholder {
-  }
 
+  }
+  
   .dropdown-menu {
     background-color: '#edd4fe';
     margin-top: 4px;
@@ -84,6 +86,7 @@ export const GlobalStyles = createGlobalStyle`
     transition: all .2s ease;
     color: #000;
 
+
     .is-selected {
       background-color: #edd4fe;
 
@@ -93,7 +96,6 @@ export const GlobalStyles = createGlobalStyle`
 
       :hover {
         background-color: #edd4fe !important;
-        cursor: default;
       }
     }
   }
@@ -106,6 +108,7 @@ export const GlobalStyles = createGlobalStyle`
   .Dropdown-option {
     padding: 8px 24px;
     color: #000;
+
 
     :hover {
       background: rgba(255, 255, 255, .3);

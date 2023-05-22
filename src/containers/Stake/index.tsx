@@ -3,6 +3,7 @@ import Image from 'next/image';
 
 import { useCallback, useEffect, useState } from 'react';
 import Dropdown from 'react-dropdown';
+import { BiHelpCircle } from 'react-icons/bi';
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
@@ -27,9 +28,11 @@ import {
   StakingInfo,
   TokenContainer
 } from './styles';
+
 import 'react-dropdown/style.css';
 
 import 'react-dropdown/style.css';
+import { calcularDiasDesbloqueio } from '../../utils/cacLockup';
 
 export default function Stake() {
   const [isLoading, setIsLoading] = useState(false);
@@ -68,7 +71,7 @@ export default function Stake() {
 
   useEffect(() => {
     getStakedNfts();
-  }, [currentVault, address]);
+  }, [address]);
 
   useEffect(() => {
     getStaking();
@@ -250,6 +253,17 @@ export default function Stake() {
                     loader={({ src, width }) => `${src}?w=${width}`}
                   />
                   <h2>{token.name}</h2>
+
+                  <div className="line"></div>
+
+                  <div className="nft-info">
+                    <div>Rarity: {token.rarityType} </div>
+                    <div>
+                      Unlock in{' '}
+                      {calcularDiasDesbloqueio(token.stakeDate, token.lockup)}{' '}
+                      Days
+                    </div>
+                  </div>
 
                   <button
                     onClick={() => handleUnstakeNft([token.tokenId])}
