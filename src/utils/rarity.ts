@@ -13,7 +13,7 @@ export const rarity = [
   { rank: 13, tokenId: 12, raridade: 'Mythic' },
   { rank: 14, tokenId: 13, raridade: 'Mythic' },
   { rank: 15, tokenId: 14, raridade: 'Mythic' },
-  { rank: 15, tokenId: 15, raridade: 'Common' },
+  { rank: 15, tokenId: 15, raridade: 'Mythic' },
   { rank: 817, tokenId: 16, raridade: 'Rare' },
   { rank: 2024, tokenId: 17, raridade: 'Uncommon' },
   { rank: 3587, tokenId: 18, raridade: 'Common' },
