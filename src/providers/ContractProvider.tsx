@@ -82,7 +82,7 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     const tokens = await nftContractGet.methods.tokensOfOwner(address).call();
 
     const unstakedResponse = await Promise.all(
-      tokens.map(async (nft, index) => {
+      tokens.map(async (nft) => {
         const url = await nftContractGet.methods.tokenURI(nft).call();
         const { data } = await axios.get(
           `https://ipfs.io/ipfs/${url.split('://')[1]}`
@@ -121,6 +121,7 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [address, nftContractGet.methods]);
 
   const handleStakeNft = async (tokenIds: number[]) => {
+    console.log(tokenIds);
     try {
       const isApproved = await nftContractGet.methods
         .isApprovedForAll(address, StakingContractAddress)

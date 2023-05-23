@@ -24,10 +24,7 @@ export const Button = styled.button<{ isLoading?: boolean }>`
   transition: all 0.2s ease;
 
   :hover {
-    color: ${({ theme }) => theme.colors.text};
-    background: ${({ theme }) => theme.colors.card} !important;
-    font-weight: bold;
-    border-color: ${({ theme }) => theme.colors.gray[12]};
+    filter: brightness(0.8);
   }
 
   &:disabled {

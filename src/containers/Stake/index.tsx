@@ -18,6 +18,7 @@ import { LoadingButton } from '../../components/LoadingButton';
 import { useContractContext } from '../../providers/ContractProvider';
 import { calcularDiasDesbloqueio } from '../../utils/cacLockup';
 import { calcPercentage } from '../../utils/calcPercentage';
+import { rarity } from '../../utils/rarity';
 import {
   Button,
   ButtonGroup,
@@ -29,17 +30,16 @@ import {
   StakingInfo,
   TokenContainer
 } from './styles';
-
 import 'react-dropdown/style.css';
-
 import 'react-dropdown/style.css';
-import { rarity } from '../../utils/rarity';
 
 export default function Stake() {
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<'unstaked' | 'staked'>('unstaked');
   const { isConnected, address } = useAccount();
   const [points, setPoints] = useState(0);
+  const [selectedUnstake, setSelectedUnstake] = useState([]);
+  const [selectedStake, setSelectedStake] = useState([]);
 
   const {
     getUnstakedNfts,
@@ -131,6 +131,24 @@ export default function Stake() {
 
     return () => clearInterval(intervalId);
   }, [stakedNfts]);
+
+  const handleToggleUnstake = (id) => {
+    if (selectedUnstake.includes(id)) {
+      const filtered = selectedUnstake.filter((s) => s !== id);
+      setSelectedUnstake(filtered);
+    } else {
+      setSelectedUnstake([...selectedUnstake, id]);
+    }
+  };
+
+  const handleToggleStake = (id) => {
+    if (selectedStake.includes(id)) {
+      const filtered = selectedStake.filter((s) => s !== id);
+      setSelectedStake(filtered);
+    } else {
+      setSelectedStake([...selectedStake, id]);
+    }
+  };
 
   return (
     <>
@@ -245,27 +263,47 @@ export default function Stake() {
                 <span>Mythic - 12 points per day</span>
               </Popup>
               {activeTab === 'unstaked' && (
-                <LoadingButton
-                  onClick={() => {
-                    const tokenIds = unstakedNfts.map((n) => n.tokenId);
-                    handleStakeNft(tokenIds);
-                  }}
-                  isLoading={isLoading}
-                >
-                  Stake All
-                </LoadingButton>
+                <>
+                  {selectedUnstake.length > 0 && (
+                    <LoadingButton
+                      onClick={() => handleStakeNft(selectedUnstake)}
+                      isLoading={isLoading}
+                    >
+                      Stake
+                    </LoadingButton>
+                  )}
+                  <LoadingButton
+                    onClick={() => {
+                      const tokenIds = unstakedNfts.map((n) => n.tokenId);
+                      handleStakeNft(tokenIds);
+                    }}
+                    isLoading={isLoading}
+                  >
+                    Stake All
+                  </LoadingButton>
+                </>
               )}
               {activeTab === 'staked' && (
-                <LoadingButton
-                  onClick={() => {
-                    const tokenIds = stakedNfts.map((n) => n.tokenId);
+                <>
+                  {selectedStake.length > 0 && (
+                    <LoadingButton
+                      onClick={() => handleUnstakeNft(selectedStake)}
+                      isLoading={isLoading}
+                    >
+                      Unstake
+                    </LoadingButton>
+                  )}
+                  <LoadingButton
+                    onClick={() => {
+                      const tokenIds = stakedNfts.map((n) => n.tokenId);
 
-                    handleUnstakeNft(tokenIds);
-                  }}
-                  isLoading={isLoading}
-                >
-                  Unstake All
-                </LoadingButton>
+                      handleUnstakeNft(tokenIds);
+                    }}
+                    isLoading={isLoading}
+                  >
+                    Unstake All
+                  </LoadingButton>
+                </>
               )}
             </div>
           )}
@@ -274,11 +312,14 @@ export default function Stake() {
           {activeTab === 'unstaked'
             ? isConnected &&
               unstakedNfts.map((token, index) => (
-                <TokenContainer
-                  key={Math.random() * index}
-                  onClick={() => null}
-                  // isSelected={selectedNFTS.includes(token.tokenId)}
-                >
+                <TokenContainer key={Math.random() * index}>
+                  <input
+                    type="checkbox"
+                    name=""
+                    id=""
+                    checked={selectedUnstake.includes(token.tokenId)}
+                    onChange={() => handleToggleUnstake(token.tokenId)}
+                  />
                   <Image
                     src={token?.image}
                     alt={token?.name}
@@ -311,6 +352,13 @@ export default function Stake() {
             : isConnected &&
               stakedNfts.map((token, index) => (
                 <TokenContainer key={Math.random() * index}>
+                  <input
+                    type="checkbox"
+                    name=""
+                    id=""
+                    checked={selectedStake.includes(Number(token.tokenId))}
+                    onChange={() => handleToggleStake(Number(token.tokenId))}
+                  />
                   <Image
                     src={token.image}
                     alt="token"

@@ -42,6 +42,10 @@ export const InfoContainer = styled.div`
   justify-content: space-evenly;
   margin-top: 30px;
   z-index: 1;
+  @media ${({ theme }) => theme.breakpoints.mobile} {
+    gap: 20px;
+    flex-direction: column;
+  }
 `;
 
 export const Info = styled.div`

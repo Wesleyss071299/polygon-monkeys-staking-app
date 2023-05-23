@@ -321,6 +321,16 @@ export const TokenContainer = styled.div`
   padding: 16px;
   border-radius: 12px;
   color: #000 !important;
+  position: relative;
+
+  input {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: 20px;
+    margin-right: 20px;
+    z-index: 1;
+  }
 
   img {
     border-radius: 12px;
