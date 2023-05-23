@@ -17,16 +17,9 @@ export const createStakingContract = () => {
   return new web3.eth.Contract(STAKINGABI as any, StakingContractAddress);
 };
 
-// export const createNFTContractGet = () => {
-//   const web3 = new Web3(
-//     'https://morning-weathered-fog.matic.discover.quiknode.pro/a28deafbeced08422cba57ed873fc6fddcf65a59/'
-//   );
-//   return new web3.eth.Contract(NFTABI as any, NFTContractAddress);
-// };
-
 export const createNFTContractGet = () => {
   const web3 = new Web3(
-    'https://morning-weathered-fog.matic.discover.quiknode.pro/a28deafbeced08422cba57ed873fc6fddcf65a59/'
+    'https://rpc.ankr.com/polygon/55d123e195f8665b8c5a76f5755a9616ba7452863f8d6f347e2de4821bc346dd'
   );
   return new web3.eth.Contract(NFTABI as any, NFTContractAddress);
 };
