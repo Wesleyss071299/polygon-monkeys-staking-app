@@ -11,7 +11,7 @@ export const GlobalStyles = createGlobalStyle`
     line-height: 1.2 !important;
     font-size: 1.6rem;
     color: ${({ theme }) => theme.colors.text};
-    background-color: #f9f1ef;    
+    background-color: #0f051d;    
    }
 
   html {
