@@ -55,10 +55,14 @@ export const GlobalStyles = createGlobalStyle`
     border-radius: 20px;
     transition: all .2s ease;
     color: #000;
+    font-family: 'Bebas Neue', cursive !important;
+
     
   }
   
   .dropdown-control {
+    font-family: 'Bebas Neue', cursive !important;
+
     background-color: transparent;
     border: none;
     padding: 0;
@@ -71,10 +75,12 @@ export const GlobalStyles = createGlobalStyle`
   }
   
   .dropdown-placeholder {
+    font-family: 'Bebas Neue', cursive !important;
 
   }
   
   .dropdown-menu {
+    font-family: 'Bebas Neue', cursive !important;
     background-color: '#edd4fe';
     margin-top: 4px;
     border-radius: 12px;
@@ -89,9 +95,13 @@ export const GlobalStyles = createGlobalStyle`
 
     .is-selected {
       background-color: #edd4fe;
+      font-family: 'Bebas Neue', cursive !important;
+
 
       h6, span {
+        font-family: 'Bebas Neue', cursive !important;
         color: #000;
+        font-weight: bold;
       }
 
       :hover {
@@ -102,12 +112,19 @@ export const GlobalStyles = createGlobalStyle`
 
   .dropdown-arrow {
     right: 24px;
+    font-family: 'Bebas Neue', cursive !important;
+
     top: 32px;
+    width: 12px;
+    color: #000 !important;
+    font-weight: bold !important;
   }
 
   .Dropdown-option {
     padding: 8px 24px;
     color: #000;
+    font-family: 'Bebas Neue', cursive !important;
+
 
 
     :hover {

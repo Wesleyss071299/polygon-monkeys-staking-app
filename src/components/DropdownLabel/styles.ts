@@ -18,9 +18,7 @@ export const Container = styled.div`
   gap: 4px;
 
   h6 {
-    color: ${({ theme }) => theme.colors.gray[1]};
     font-size: 1.6rem;
-    font-family: sans-serif;
   }
 
   span {
@@ -33,7 +31,6 @@ export const Container = styled.div`
 export const IconContainerWrapper = styled.div`
   width: 20px;
   align-self: flex-end;
-  background-color: red;
 
   &:hover ${Popup} {
     opacity: 1;

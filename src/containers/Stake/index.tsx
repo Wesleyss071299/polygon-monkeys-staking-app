@@ -3,6 +3,7 @@ import Image from 'next/image';
 
 import { useCallback, useEffect, useState } from 'react';
 import Dropdown from 'react-dropdown';
+import { toast } from 'react-hot-toast';
 import { BiHelpCircle } from 'react-icons/bi';
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
@@ -33,7 +34,6 @@ import {
 
 import 'react-dropdown/style.css';
 import 'react-dropdown/style.css';
-import { toast } from 'react-hot-toast';
 
 export default function Stake() {
   const [isLoading, setIsLoading] = useState(false);
@@ -49,7 +49,6 @@ export default function Stake() {
     unstakedNfts,
     stakedNfts,
     handleStakeNft,
-    rewards,
     currentVault,
     setCurrentVault,
     getStakingInfo,
