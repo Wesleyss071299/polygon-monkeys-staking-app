@@ -30,7 +30,9 @@ const ContractContext = React.createContext({
   },
   setCurrentVault: null,
   getStakingInfo: null,
-  handleUnstakeNft: null
+  handleUnstakeNft: null,
+  stakingInfo: [],
+  getStakingInfoInitial: null
 });
 
 const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -52,11 +54,12 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
   const [stakedNfts, setStakedNfts] = useState([]);
   const [totalStaked, setTotalStaked] = useState(0);
   const [totalStakedPerUser, setTotalStakedPerUser] = useState(0);
+  const [stakingInfo, setStakingInfo] = useState();
 
   const [rewards, setRewards] = useState(0);
 
   const { address } = useAccount();
-  // const address = '0x95Da5569C9b7ED485330E6D31E3DdB62CC07Db68';
+  // const address = '0x2A46ECF44B3ae4EC9703E817BA7d95b19D995381';
 
   useEffect(() => {
     setNftContract(createNFTContract());
@@ -64,16 +67,19 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     setStakingContract(createStakingContract());
   }, []);
 
-  useEffect(() => {
-    console.log(currentVault);
-  }, [currentVault]);
-
   const getStakingInfo = useCallback(async () => {
     const { data } = await api.get(`user/${address}`);
     const response = await api.get(`stake`);
     setRewards(data.balance);
     setTotalStakedPerUser(data.stakes.length);
     setTotalStaked(response.data.length);
+    setStakingInfo(response.data);
+  }, [address]);
+
+  const getStakingInfoInitial = useCallback(async () => {
+    const response = await api.get(`stake`);
+    setTotalStaked(response.data.length);
+    setStakingInfo(response.data);
   }, [address]);
 
   const getUnstakedNfts = useCallback(async () => {
@@ -233,7 +239,9 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         setCurrentVault,
         getStakingInfo,
         handleUnstakeNft,
-        totalStakedPerUser
+        totalStakedPerUser,
+        stakingInfo,
+        getStakingInfoInitial
       }}
     >
       {children}

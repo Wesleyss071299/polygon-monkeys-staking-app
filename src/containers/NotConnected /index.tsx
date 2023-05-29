@@ -9,15 +9,8 @@ import { calcPercentage } from '../../utils/calcPercentage';
 import { Container, Info, InfoContainer } from './styles';
 
 export default function NotConnected() {
-  const { totalStaked, getStakingInfo } = useContractContext();
+  const { totalStaked, stakingInfo } = useContractContext();
 
-  const getStaking = useCallback(async () => {
-    await getStakingInfo();
-  }, [getStakingInfo]);
-
-  useEffect(() => {
-    getStaking();
-  }, []);
   return (
     <Container>
       <Image src="/logo.png" width={400} height={400} alt="logo" />
@@ -136,6 +129,36 @@ export default function NotConnected() {
         <Info>
           <span>Total Monkeys Staked</span>
           <h1>{totalStaked}</h1>
+        </Info>
+        <Info>
+          <span>STAKED PER VAULT</span>
+          <div>
+            <span>
+              7 DAYS: {stakingInfo?.filter((s) => s.lockup === 7).length}
+            </span>
+            <span>
+              30 DAYS: {stakingInfo?.filter((s) => s.lockup === 30).length}
+            </span>
+            <span>
+              60 DAYS: {stakingInfo?.filter((s) => s.lockup === 60).length}
+            </span>
+            <span>
+              90 DAYS:{' '}
+              {
+                stakingInfo?.filter(
+                  (s) => s.lockup === 90 && s.type === 'NORMAL'
+                ).length
+              }
+            </span>
+            <span>
+              RARITY BASED:{' '}
+              {
+                stakingInfo?.filter(
+                  (s) => s.lockup === 90 && s.type === 'RARITY'
+                ).length
+              }
+            </span>
+          </div>
         </Info>
         <Info>
           <span>% of Total Staked</span>

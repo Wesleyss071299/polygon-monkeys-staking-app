@@ -66,4 +66,13 @@ export const Info = styled.div`
     color: #37255f;
     font-size: 78px;
   }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    span {
+      color: #37255f;
+      font-size: 15px;
+    }
+  }
 `;
