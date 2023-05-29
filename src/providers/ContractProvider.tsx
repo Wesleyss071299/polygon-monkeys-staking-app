@@ -24,8 +24,8 @@ const ContractContext = React.createContext({
   rewards: 0,
   totalStakedPerUser: 0,
   currentVault: {
-    id: '1',
-    lockup: '7',
+    id: '0',
+    lockup: '0',
     type: 'NORMAL'
   },
   setCurrentVault: null,
@@ -45,8 +45,8 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
   const [nftContractGet, setNftContractGet] = useState(createNFTContractGet());
 
   const [currentVault, setCurrentVault] = useState({
-    id: '1',
-    lockup: LOCKUP_PERIOD_1,
+    id: '0',
+    lockup: '0',
     type: 'NORMAL'
   });
 

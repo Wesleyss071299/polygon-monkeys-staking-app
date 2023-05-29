@@ -30,8 +30,10 @@ import {
   StakingInfo,
   TokenContainer
 } from './styles';
+
 import 'react-dropdown/style.css';
 import 'react-dropdown/style.css';
+import { toast } from 'react-hot-toast';
 
 export default function Stake() {
   const [isLoading, setIsLoading] = useState(false);
@@ -83,17 +85,22 @@ export default function Stake() {
   const dropdownOptions = DROPDOWN_OPTIONS.map((option) => {
     return {
       value: option.id,
-      label: (
-        <DropdownLabel
-          key={option.id}
-          title={`${
-            option.type === 'RARITY' ? 'RARITY BASED' : option.rewardRate
-          } ${option.rewardRate === '1' ? 'POINT' : 'POINTS'}  PER MONKEY`}
-        >
-          {option.type === 'RARITY' ? 'Fixed' : ''} Lockup:{' '}
-          {option.lockupPeriod} Days
-        </DropdownLabel>
-      )
+      label:
+        option.id === '0' ? (
+          <DropdownLabel key={option.id} title="Select Your Vault">
+            <></>
+          </DropdownLabel>
+        ) : (
+          <DropdownLabel
+            key={option.id}
+            title={`${
+              option.type === 'RARITY' ? 'RARITY BASED' : option.rewardRate
+            } ${option.rewardRate === '1' ? 'POINT' : 'POINTS'}  PER MONKEY`}
+          >
+            {option.type === 'RARITY' ? 'Fixed' : ''} Lockup:{' '}
+            {option.lockupPeriod} Days
+          </DropdownLabel>
+        )
     };
   });
 
@@ -182,14 +189,14 @@ export default function Stake() {
 
             <Dropdown
               options={dropdownOptions.sort((a, b) => {
-                if (a.value === currentVault.id) return -1;
-                if (b.value === currentVault.id) return 1;
+                if (a.value === currentVault?.id) return 1;
+                if (b.value === currentVault?.id) return 1;
                 return 0;
               })}
               onChange={(e) => {
                 handleDropDown(e.value, currentVault.type);
               }}
-              value={currentVault.id}
+              value={currentVault?.id}
               className="dropdown"
               controlClassName="dropdown-control"
               placeholderClassName="dropdown-placeholder"
@@ -266,7 +273,12 @@ export default function Stake() {
                 <>
                   {selectedUnstake.length > 0 && (
                     <LoadingButton
-                      onClick={() => handleStakeNft(selectedUnstake)}
+                      onClick={() => {
+                        if (currentVault.id === '0') {
+                          return toast.error('Choose a vault');
+                        }
+                        handleStakeNft(selectedUnstake);
+                      }}
                       isLoading={isLoading}
                     >
                       Stake
@@ -274,6 +286,9 @@ export default function Stake() {
                   )}
                   <LoadingButton
                     onClick={() => {
+                      if (currentVault.id === '0') {
+                        return toast.error('Choose a vault');
+                      }
                       const tokenIds = unstakedNfts.map((n) => n.tokenId);
                       handleStakeNft(tokenIds);
                     }}
@@ -342,7 +357,12 @@ export default function Stake() {
                   </div>
 
                   <button
-                    onClick={() => handleStakeNft([token.tokenId])}
+                    onClick={() => {
+                      if (currentVault.id === '0') {
+                        return toast.error('Choose a vault');
+                      }
+                      handleStakeNft([token.tokenId]);
+                    }}
                     disabled={isLoading}
                   >
                     STAKE

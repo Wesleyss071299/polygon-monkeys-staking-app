@@ -7,6 +7,12 @@ export const REWARD_RATE = 2;
 
 export const DROPDOWN_OPTIONS = [
   {
+    id: '0',
+    type: 'NORMAL',
+    rewardRate: '0',
+    lockupPeriod: '0'
+  },
+  {
     id: '1',
     type: 'NORMAL',
     rewardRate: '1',
