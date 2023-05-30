@@ -54,7 +54,8 @@ export default function Stake() {
     getStakingInfo,
     totalStaked,
     handleUnstakeNft,
-    totalStakedPerUser
+    totalStakedPerUser,
+    rewards
   } = useContractContext();
 
   const getNfts = useCallback(async () => {
@@ -124,19 +125,19 @@ export default function Stake() {
       const pontosNft = diferencaEmDias * stakedNfts[i].multiplier; // pontos gerados pela NFT até agora
       pontosTotal += pontosNft; // soma os pontos gerados por todas as NFTs
     }
-    return pontosTotal.toFixed(4);
+    return pontosTotal;
   };
 
   function atualizarPontos() {
     const pontos = calcularPontos();
-    setPoints(Number(pontos));
+    setPoints(Number(pontos + rewards));
   }
 
   useEffect(() => {
     const intervalId = setInterval(atualizarPontos, 1000);
 
     return () => clearInterval(intervalId);
-  }, [stakedNfts]);
+  }, [stakedNfts, rewards]);
 
   const handleToggleUnstake = (id) => {
     if (selectedUnstake.includes(id)) {
@@ -396,6 +397,7 @@ export default function Stake() {
                       {calcularDiasDesbloqueio(token.stakeDate, token.lockup)}{' '}
                       Days
                     </div>
+                    <div>Points {token.balance}</div>
                   </div>
 
                   <button

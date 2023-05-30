@@ -70,7 +70,7 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
   const getStakingInfo = useCallback(async () => {
     const { data } = await api.get(`user/${address}`);
     const response = await api.get(`stake`);
-    setRewards(data.balance);
+    setRewards(data.balanceUser);
     setTotalStakedPerUser(data.stakes.length);
     setTotalStaked(response.data.length);
     setStakingInfo(response.data);
@@ -118,7 +118,8 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
           rarityType: nft.rarityType,
           stakeDate: nft.stakeDate,
           lockup: nft.lockup,
-          multiplier: nft.multiplier
+          multiplier: nft.multiplier,
+          balance: nft.balance
         };
       })
     );
