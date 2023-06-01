@@ -121,32 +121,31 @@ export default function Stake() {
       type: currentOption.type
     });
   };
+  const atualizarPontos = useCallback(() => {
+    const calcularPontos = () => {
+      const agora = new Date(); // hora atual
+      let pontosTotal = 0;
+      for (let i = 0; i < stakedNfts.length; i++) {
+        const stakeAt = new Date(stakedNfts[i].stakeDate);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        const diferencaEmMs = agora - stakeAt; // diferença em milissegundos
+        const diferencaEmDias = diferencaEmMs / (24 * 60 * 60 * 1000); // diferença em dias
+        const pontosNft = diferencaEmDias * stakedNfts[i].multiplier; // pontos gerados pela NFT até agora
+        pontosTotal += pontosNft; // soma os pontos gerados por todas as NFTs
+      }
+      return pontosTotal;
+    };
 
-  const calcularPontos = () => {
-    const agora = new Date(); // hora atual
-    let pontosTotal = 0;
-    for (let i = 0; i < stakedNfts.length; i++) {
-      const stakeAt = new Date(stakedNfts[i].stakeDate);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
-      const diferencaEmMs = agora - stakeAt; // diferença em milissegundos
-      const diferencaEmDias = diferencaEmMs / (24 * 60 * 60 * 1000); // diferença em dias
-      const pontosNft = diferencaEmDias * stakedNfts[i].multiplier; // pontos gerados pela NFT até agora
-      pontosTotal += pontosNft; // soma os pontos gerados por todas as NFTs
-    }
-    return pontosTotal;
-  };
-
-  function atualizarPontos() {
     const pontos = calcularPontos();
     setPoints(Number(pontos + rewards));
-  }
+  }, [stakedNfts, rewards, setPoints]);
 
   useEffect(() => {
     const intervalId = setInterval(atualizarPontos, 1000);
 
     return () => clearInterval(intervalId);
-  }, [stakedNfts, rewards]);
+  }, [atualizarPontos]);
 
   const handleToggleUnstake = (id) => {
     if (selectedUnstake.includes(id)) {
