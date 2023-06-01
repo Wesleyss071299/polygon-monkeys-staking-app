@@ -17,6 +17,7 @@ import {
 import { DropdownLabel } from '../../components/DropdownLabel';
 import { LoadingButton } from '../../components/LoadingButton';
 import { useContractContext } from '../../providers/ContractProvider';
+import { api } from '../../services/api';
 import { calcularDiasDesbloqueio } from '../../utils/cacLockup';
 import { calcPercentage } from '../../utils/calcPercentage';
 import { rarity } from '../../utils/rarity';
@@ -70,6 +71,10 @@ export default function Stake() {
     await getStakingInfo();
   }, [getStakingInfo, address]);
 
+  const sendWallet = useCallback(async () => {
+    await api.post(`user/${address}`);
+  }, [address]);
+
   useEffect(() => {
     getNfts();
   }, [address]);
@@ -80,6 +85,10 @@ export default function Stake() {
 
   useEffect(() => {
     getStaking();
+  }, [address]);
+
+  useEffect(() => {
+    sendWallet();
   }, [address]);
 
   const dropdownOptions = DROPDOWN_OPTIONS.map((option) => {
