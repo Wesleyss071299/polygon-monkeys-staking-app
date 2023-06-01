@@ -58,8 +58,8 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const [rewards, setRewards] = useState(0);
 
-  // const { address } = useAccount();
-  const address = '0x42188149C8bdb07258B61349c286D6C8DeC84EA6';
+  const { address } = useAccount();
+  // const address = '0x42188149C8bdb07258B61349c286D6C8DeC84EA6';
 
   useEffect(() => {
     setNftContract(createNFTContract());
