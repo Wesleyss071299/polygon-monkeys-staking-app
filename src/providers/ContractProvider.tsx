@@ -13,6 +13,7 @@ import {
   createNFTContractGet,
   createStakingContract
 } from '../utils/constants';
+import { rarity } from '../utils/rarity';
 
 const ContractContext = React.createContext({
   getUnstakedNfts: null,
@@ -59,7 +60,6 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
   const [rewards, setRewards] = useState(0);
 
   const { address } = useAccount();
-  // const address = '0x42188149C8bdb07258B61349c286D6C8DeC84EA6';
 
   useEffect(() => {
     setNftContract(createNFTContract());
@@ -87,45 +87,64 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const tokens = await nftContractGet.methods.tokensOfOwner(address).call();
 
-    const unstakedResponse = await Promise.all(
-      tokens.map(async (nft) => {
-        const url = await nftContractGet.methods.tokenURI(nft).call();
-        const { data } = await axios.get(
-          `https://ipfs.io/ipfs/${url.split('://')[1]}`
-        );
-        return {
-          ...data,
-          tokenId: nft
-        };
-      })
+    const unstaked = rarity.filter((r) =>
+      tokens.includes(r.tokenId.toString())
     );
+    // console.log(teste, 'teste');
 
-    setUnstakedNfts(unstakedResponse);
+    // const unstakedResponse = await Promise.all(
+    //   tokens.map(async (nft) => {
+    //     const url = await nftContractGet.methods.tokenURI(nft).call();
+    //     const { data } = await axios.get(
+    //       `https://ipfs.io/ipfs/${url.split('://')[1]}`
+    //     );
+    //     return {
+    //       ...data,
+    //       tokenId: nft
+    //     };
+    //   })
+    // );
+
+    // console.log(unstakedResponse, 'response');
+
+    setUnstakedNfts(unstaked);
   }, [address, nftContract, nftContractGet.methods]);
 
   const getStakedNftsByLockup = useCallback(async () => {
     const { data } = await api.get(`user/staked/${address}`);
-    const stakedResponse = await Promise.all(
-      data.map(async (nft) => {
-        const url = await nftContractGet.methods.tokenURI(nft.tokenId).call();
-        const { data } = await axios.get(
-          `https://ipfs.io/ipfs/${url.split('://')[1]}`
-        );
-        return {
-          ...data,
-          tokenId: nft.tokenId,
-          rarityId: nft.rarityId,
-          rarityType: nft.rarityType,
-          stakeDate: nft.stakeDate,
-          lockup: nft.lockup,
-          multiplier: nft.multiplier,
-          balance: nft.balance
-        };
-      })
-    );
+    const tokenIds = data.map((d) => d.tokenId);
+
+    const staked = rarity.filter((r) => tokenIds.includes(r.tokenId));
+
+    const stakedResponse = staked.map((s) => {
+      const nft = data.find((d) => d.tokenId === s.tokenId);
+      return {
+        ...s,
+        ...nft
+      };
+    });
+
+    // const stakedResponse = await Promise.all(
+    //   data.map(async (nft) => {
+    //     const url = await nftContractGet.methods.tokenURI(nft.tokenId).call();
+    //     const { data } = await axios.get(
+    //       `https://ipfs.io/ipfs/${url.split('://')[1]}`
+    //     );
+    //     return {
+    //       ...data,
+    //       tokenId: nft.tokenId,
+    //       rarityId: nft.rarityId,
+    //       rarityType: nft.rarityType,
+    //       stakeDate: nft.stakeDate,
+    //       lockup: nft.lockup,
+    //       multiplier: nft.multiplier,
+    //       balance: nft.balance
+    //     };
+    //   })
+    // );
 
     setStakedNfts(stakedResponse);
-  }, [address, nftContractGet.methods]);
+  }, [address]);
 
   const handleStakeNft = async (tokenIds: number[]) => {
     console.log(tokenIds);
