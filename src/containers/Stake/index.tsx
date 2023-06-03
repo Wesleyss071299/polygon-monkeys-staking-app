@@ -252,7 +252,7 @@ export default function Stake() {
           </Button>
           {isConnected && (
             <div className="staking-actions">
-              <BiHelpCircle size={30} color="#000" className="iconHelp" />
+              <BiHelpCircle size={30} color="#FFF" className="iconHelp" />
               <Popup>
                 <span>
                   7 days lockup - 1 point per day - Only withdraw after 7 days
