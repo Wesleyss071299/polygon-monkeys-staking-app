@@ -12,32 +12,32 @@ export const DROPDOWN_OPTIONS = [
     rewardRate: '0',
     lockupPeriod: '0'
   },
+  // {
+  //   id: '1',
+  //   type: 'NORMAL',
+  //   rewardRate: '1',
+  //   lockupPeriod: '7'
+  // },
   {
     id: '1',
-    type: 'NORMAL',
-    rewardRate: '1',
-    lockupPeriod: '7'
-  },
-  {
-    id: '2',
     type: 'NORMAL',
     rewardRate: '2',
     lockupPeriod: '30'
   },
   {
-    id: '3',
+    id: '2',
     type: 'NORMAL',
     rewardRate: '4',
     lockupPeriod: '60'
   },
   {
-    id: '4',
+    id: '3',
     type: 'NORMAL',
     rewardRate: '6',
     lockupPeriod: '90'
   },
   {
-    id: '5',
+    id: '4',
     type: 'RARITY',
     rewardRate: ' ',
     lockupPeriod: '90'
