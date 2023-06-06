@@ -405,7 +405,9 @@ export default function Stake() {
                       {calcularDiasDesbloqueio(token.stakeDate, token.lockup)}{' '}
                       Days
                     </div>
-                    <div>Points {token.balance}</div>
+                    <div>
+                      Points {token.balance === 6 ? 6.5 : token.balance}
+                    </div>
                   </div>
 
                   <button
