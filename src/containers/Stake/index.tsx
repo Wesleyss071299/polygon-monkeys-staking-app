@@ -28,6 +28,7 @@ import {
   GridContainer,
   Header,
   InfoCard,
+  Maintenance,
   Popup,
   StakingInfo,
   TokenContainer
@@ -170,7 +171,13 @@ export default function Stake() {
       <Head>
         <title>{COLLECTION_NAME} Staking</title>
       </Head>
-      <Header>
+
+      <Maintenance>
+        <h1>We are under maintenance</h1>
+        <h2>Your monkeys are safe</h2>
+      </Maintenance>
+
+      {/* <Header>
         <div className="collection-info">
           <Image
             src="/logo.png"
@@ -419,7 +426,7 @@ export default function Stake() {
                 </TokenContainer>
               ))}
         </GridContainer>
-      </Content>
+      </Content> */}
     </>
   );
 }

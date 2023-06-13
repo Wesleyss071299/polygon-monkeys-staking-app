@@ -383,3 +383,12 @@ export const TokenContainer = styled.div`
     }
   }
 `;
+
+export const Maintenance = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
