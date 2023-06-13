@@ -172,12 +172,12 @@ export default function Stake() {
         <title>{COLLECTION_NAME} Staking</title>
       </Head>
 
-      <Maintenance>
+      {/* <Maintenance>
         <h1>We are under maintenance</h1>
         <h2>Your monkeys are safe</h2>
-      </Maintenance>
+      </Maintenance> */}
 
-      {/* <Header>
+      <Header>
         <div className="collection-info">
           <Image
             src="/logo.png"
@@ -426,7 +426,7 @@ export default function Stake() {
                 </TokenContainer>
               ))}
         </GridContainer>
-      </Content> */}
+      </Content>
     </>
   );
 }
