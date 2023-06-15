@@ -185,7 +185,7 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         );
       }
 
-      const gasFee = data.estimatedBaseFee;
+      const gasFee = data.speeds[3].maxFeePerGas;
 
       const gas = await stakingContract.methods
         .stakeToken(tokenIds, Number(currentVault.lockup), currentVault.type)
