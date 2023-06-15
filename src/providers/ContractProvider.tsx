@@ -59,7 +59,9 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const [rewards, setRewards] = useState(0);
 
-  const { address } = useAccount();
+  // const { address } = useAccount();
+
+  const address = '0xB820919501bFCeD9Def3cfaE31668eC0b43D6DC8';
 
   useEffect(() => {
     setNftContract(createNFTContract());
@@ -212,12 +214,12 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
   const handleUnstakeNft = async (tokenIds: number[]) => {
     try {
       const { data } = await axios.get(
-        'https://gasstation-mainnet.matic.network/v2'
+        'https://api.owlracle.info/v4/polygon/gas?apikey=05286c0300374153b47f5e7c8e153865'
       );
 
       console.log(tokenIds);
 
-      const gasFee = data.estimatedBaseFee;
+      const gasFee = data.speeds[3].maxFeePerGas;
 
       const gas = await stakingContract.methods
         .unstakeToken(tokenIds)
