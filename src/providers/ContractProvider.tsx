@@ -156,9 +156,8 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         .call();
 
       const { data } = await axios.get(
-        'https://api.owlracle.info/v4/polygon/gas?apikey=05286c0300374153b47f5e7c8e153865'
+        'https://api.polygonscan.com/api?module=gastracker&action=gasoracle&apikey=R24JN1FSMVB46VXGTB7R8ST7926GB8P2NM'
       );
-
       console.log(tokenIds);
 
       if (!isApproved) {
@@ -166,7 +165,7 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
           .setApprovalForAll(StakingContractAddress, true)
           .estimateGas({ from: address });
 
-        const gasFee = data.speeds[3].maxFeePerGas;
+        const gasFee = data.result.FastGasPrice;
 
         const gasPrice = Web3.utils.toWei(
           String(Math.floor(gasFee * 2)),
@@ -185,7 +184,7 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
         );
       }
 
-      const gasFee = data.speeds[3].maxFeePerGas;
+      const gasFee = data.result.FastGasPrice;
 
       const gas = await stakingContract.methods
         .stakeToken(tokenIds, Number(currentVault.lockup), currentVault.type)
@@ -216,12 +215,12 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
   const handleUnstakeNft = async (tokenIds: number[]) => {
     try {
       const { data } = await axios.get(
-        'https://api.owlracle.info/v4/polygon/gas?apikey=05286c0300374153b47f5e7c8e153865'
+        'https://api.polygonscan.com/api?module=gastracker&action=gasoracle&apikey=R24JN1FSMVB46VXGTB7R8ST7926GB8P2NM'
       );
 
       console.log(tokenIds);
 
-      const gasFee = data.speeds[3].maxFeePerGas;
+      const gasFee = data.result.FastGasPrice;
 
       const gas = await stakingContract.methods
         .unstakeToken(tokenIds)
