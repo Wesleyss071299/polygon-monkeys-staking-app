@@ -412,10 +412,8 @@ export default function Stake() {
                       {calcularDiasDesbloqueio(token.stakeDate, token.lockup)}{' '}
                       Days
                     </div>
-                    <div>
-                      Points {token.balance === 6 ? 6.5 : token.balance}
-                    </div>
                   </div>
+                  <div>Points {token.balance === 6 ? 6.5 : token.balance}</div>
 
                   <button
                     onClick={() => handleUnstakeNft([token.tokenId])}
