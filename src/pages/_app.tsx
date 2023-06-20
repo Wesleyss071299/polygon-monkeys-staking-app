@@ -6,7 +6,19 @@ import { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import Modal from 'react-modal';
 
-import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import {
+  getDefaultWallets,
+  RainbowKitProvider,
+  connectorsForWallets
+} from '@rainbow-me/rainbowkit';
+import {
+  injectedWallet,
+  rainbowWallet,
+  metaMaskWallet,
+  coinbaseWallet,
+  walletConnectWallet,
+  phantomWallet
+} from '@rainbow-me/rainbowkit/wallets';
 import { ThemeProvider } from 'styled-components';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { polygon } from 'wagmi/chains';
@@ -20,10 +32,27 @@ Modal.setAppElement('#modal-portal');
 
 const { chains, provider } = configureChains([polygon], [publicProvider()]);
 
-const { connectors } = getDefaultWallets({
-  appName: 'My RainbowKit App',
-  chains
-});
+const connectors = connectorsForWallets([
+  {
+    groupName: 'Phantom',
+    wallets: [phantomWallet({ chains })]
+  },
+  {
+    groupName: 'Recommended',
+    wallets: [
+      injectedWallet({ chains }),
+      rainbowWallet({ chains }),
+      metaMaskWallet({ chains })
+    ]
+  },
+  {
+    groupName: 'Others',
+    wallets: [
+      coinbaseWallet({ chains, appName: 'My RainbowKit App' }),
+      walletConnectWallet({ chains })
+    ]
+  }
+]);
 
 const wagmiClient = createClient({
   autoConnect: true,
@@ -43,7 +72,7 @@ export default function App({ Component, pageProps }: AppProps) {
       {ready ? (
         <ThemeProvider theme={theme}>
           <WagmiConfig client={wagmiClient}>
-            <RainbowKitProvider chains={chains}>
+            <RainbowKitProvider chains={chains} coolMode>
               <ContractProvider>
                 <Toaster
                   position="top-right"
