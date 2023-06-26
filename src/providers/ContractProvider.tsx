@@ -61,7 +61,7 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const { address } = useAccount();
 
-  // const address = '0xB820919501bFCeD9Def3cfaE31668eC0b43D6DC8';
+  // const address = '0xc790b442F63F41995f3a80da44283A21a719882F';
 
   useEffect(() => {
     setNftContract(createNFTContract());
@@ -92,22 +92,6 @@ const ContractProvider: React.FC<{ children: React.ReactNode }> = ({
     const unstaked = rarity.filter((r) =>
       tokens.includes(r.tokenId.toString())
     );
-    // console.log(teste, 'teste');
-
-    // const unstakedResponse = await Promise.all(
-    //   tokens.map(async (nft) => {
-    //     const url = await nftContractGet.methods.tokenURI(nft).call();
-    //     const { data } = await axios.get(
-    //       `https://ipfs.io/ipfs/${url.split('://')[1]}`
-    //     );
-    //     return {
-    //       ...data,
-    //       tokenId: nft
-    //     };
-    //   })
-    // );
-
-    // console.log(unstakedResponse, 'response');
 
     setUnstakedNfts(unstaked);
   }, [address, nftContract, nftContractGet.methods]);

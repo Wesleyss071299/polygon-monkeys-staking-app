@@ -9024,6 +9024,14 @@ export const rarity = [
       'https://bafybeid7v6mhm5od4mxbzmjotazzjzsasil73wjvlgedrocva5dwbuqcpa.ipfs.nftstorage.link/1128.png?ext=png'
   },
   {
+    rank: 2459,
+    tokenId: 1129,
+    raridade: 'Uncommon',
+    name: 'PolygonMonkeys #1129',
+    image:
+      'https://bafybeid7v6mhm5od4mxbzmjotazzjzsasil73wjvlgedrocva5dwbuqcpa.ipfs.nftstorage.link/1129.png?ext=png'
+  },
+  {
     rank: 3598,
     tokenId: 1130,
     raridade: 'Common',
