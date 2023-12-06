@@ -19,7 +19,7 @@ export const createStakingContract = () => {
 
 export const createNFTContractGet = () => {
   const web3 = new Web3(
-    'https://rpc.ankr.com/polygon/55d123e195f8665b8c5a76f5755a9616ba7452863f8d6f347e2de4821bc346dd'
+    'https://orbital-dry-bird.matic.quiknode.pro/a9cb4567d7f7e47a1189ffbd342cedf8944935c0/'
   );
   return new web3.eth.Contract(NFTABI as any, NFTContractAddress);
 };
